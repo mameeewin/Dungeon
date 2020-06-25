@@ -47,10 +47,18 @@ c c c c c c c c c c c c c c c c
 c c c c c c c c c c c c c c c c 
 `
 }
-scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sprite, location) {
-    FUGVBG = true
+sprites.onOverlap(SpriteKind.INFIN, SpriteKind.Boss02, function (sprite, otherSprite) {
+    sprite.destroy()
+    STAUSBAR.value += -3
+})
+statusbars.onZero(StatusBarKind.YSGD, function (status) {
+    game.splash("Goodayyyyyyyy")
+    game.over(true)
+})
+statusbars.onZero(StatusBarKind.EnemyHealth, function (status) {
+    game.splash("You win first boss", "Great Job")
     tiles.setTilemap(tiles.createTilemap(
-            hex`1000100008090909131313131313090909090905020101010101010101010101010101060201010101010101010101010101010602010101010101010101010101010106020101010101010101010101010101060201010101010101010101010101010602010101010101010101010101010106020101010101010101010101010101060201010101010101010101010101010602010101010101010101010101010106030404040401010101040404040404070e0e0e0e0501010101080e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e02010b0b01060e0e0e0e0e0e`,
+            hex`1000100008090909111111111111090909090905020101010101010101010101010101060201010101010101010101010101010602010101010101010101010101010106020101010101010101010101010101060201010101010101010101010101010602010101010112010101010101010106020101010101010101010101010101060201010101010101010101010101010602010101010101010101010101010106030404040401010101040404040404070e0e0e0e0501010101080e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e02010b0b01060e0e0e0e0e0e`,
             img`
 2 2 2 2 . . . . . . 2 2 2 2 2 2 
 2 . . . . . . . . . . . . . . 2 
@@ -69,13 +77,21 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sp
 . . . . 2 . . . . 2 . . . . . . 
 . . . . 2 . . . . 2 . . . . . . 
 `,
-            [myTiles.tile0,sprites.dungeon.darkGroundCenter,sprites.dungeon.greenOuterWest1,sprites.dungeon.greenOuterSouthEast,sprites.dungeon.greenOuterSouth0,sprites.dungeon.greenOuterNorthEast,sprites.dungeon.greenOuterEast0,sprites.dungeon.greenOuterSouthWest,sprites.dungeon.greenOuterNorthWest,sprites.dungeon.greenOuterNorth0,myTiles.tile1,sprites.dungeon.collectibleRedCrystal,sprites.dungeon.chestOpen,sprites.dungeon.floorLight0,sprites.dungeon.hazardLava0,sprites.dungeon.hazardSpike,sprites.dungeon.hazardHole,sprites.dungeon.darkGroundNorthEast1,sprites.dungeon.darkGroundNorthWest1,sprites.dungeon.darkGroundSouthWest1],
+            [myTiles.tile0,sprites.dungeon.darkGroundCenter,sprites.dungeon.greenOuterWest1,sprites.dungeon.greenOuterSouthEast,sprites.dungeon.greenOuterSouth0,sprites.dungeon.greenOuterNorthEast,sprites.dungeon.greenOuterEast0,sprites.dungeon.greenOuterSouthWest,sprites.dungeon.greenOuterNorthWest,sprites.dungeon.greenOuterNorth0,myTiles.tile1,sprites.dungeon.collectibleRedCrystal,sprites.dungeon.chestOpen,sprites.dungeon.floorLight0,sprites.dungeon.hazardLava0,sprites.dungeon.hazardSpike,sprites.dungeon.hazardHole,sprites.dungeon.darkGroundSouthWest1,sprites.dungeon.chestClosed],
             TileScale.Sixteen
         ))
+    status.destroy()
+    Boss01.destroy(effects.fire, 500)
+    FVVGYGYHGHG = true
 })
-statusbars.onZero(StatusBarKind.YSGD, function (status) {
-    game.splash("Goodayyyyyyyy")
-    game.over(true)
+sprites.onOverlap(SpriteKind.INFIN, SpriteKind.Enemy, function (sprite, otherSprite) {
+    sprite.destroy()
+    statusbar2.setLabel("Enemy", 5)
+    statusbar2.value += -40
+    otherSprite.destroy()
+})
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
+    game.over(false)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorDark5, function (sprite, location) {
     game.splash("Great you have reached Boss02")
@@ -137,6 +153,31 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorDark5, function (spr
     STAUSBAR.setPosition(58, 14)
     STAUSBAR.setLabel("HP Boss", 8)
 })
+statusbars.onZero(StatusBarKind.Magic, function (status) {
+    tiles.setTilemap(tiles.createTilemap(
+            hex`1000100002020201060606060606010202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020203020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202040404020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202`,
+            img`
+. . . 2 . . . . . . 2 . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`,
+            [myTiles.tile0,myTiles.tile1,sprites.dungeon.darkGroundCenter,sprites.dungeon.doorLockedNorth,sprites.dungeon.floorLight3,sprites.dungeon.darkGroundSouth,sprites.dungeon.floorDark5],
+            TileScale.Sixteen
+        ))
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (FUGVBG == false) {
         projectile2 = sprites.createProjectileFromSprite(img`
@@ -197,40 +238,6 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         projectile2.setKind(SpriteKind.INFIN)
     }
 })
-scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.buttonOrange, function (sprite, location) {
-    tiles.setTilemap(tiles.createTilemap(
-            hex`100010000a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a010101010101010e0101010101010101010101010101011001010101010101010707070707020101010a0a0a0a0a0a0a0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b020c0d0c090b0b0b0b0b0b`,
-            img`
-2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
-2 . . . . . . . . . . . . . . 2 
-2 . . . . . . . . . . . . . . 2 
-2 2 2 2 2 2 . . . 2 2 2 2 2 2 2 
-. . . . . 2 . . . 2 . . . . . . 
-. . . . . 2 . . . 2 . . . . . . 
-. . . . . 2 . . . 2 . . . . . . 
-. . . . . 2 . . . 2 . . . . . . 
-. . . . . 2 . . . 2 . . . . . . 
-. . . . . 2 . . . 2 . . . . . . 
-. . . . . 2 . . . 2 . . . . . . 
-. . . . . 2 . . . 2 . . . . . . 
-. . . . . 2 . . . 2 . . . . . . 
-. . . . . 2 . . . 2 . . . . . . 
-. . . . . 2 . . . 2 . . . . . . 
-. . . . . 2 . . . 2 . . . . . . 
-`,
-            [myTiles.tile0,sprites.dungeon.darkGroundCenter,sprites.dungeon.purpleOuterWest0,sprites.dungeon.purpleOuterNorthEast,sprites.dungeon.purpleOuterSouthWest,sprites.dungeon.purpleOuterNorthWest,sprites.dungeon.purpleOuterSouthEast,sprites.dungeon.purpleOuterNorth0,sprites.dungeon.purpleOuterWest1,sprites.dungeon.purpleOuterEast0,sprites.dungeon.purpleOuterNorth1,sprites.dungeon.hazardLava0,sprites.dungeon.hazardSpike,sprites.dungeon.hazardHole,sprites.dungeon.buttonOrangeDepressed,sprites.dungeon.buttonOrange,sprites.vehicle.roadVertical,myTiles.tile1],
-            TileScale.Sixteen
-        ))
-})
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite, otherSprite) {
-    game.over(false)
-})
-sprites.onOverlap(SpriteKind.INFIN, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprite.destroy()
-    statusbar2.setLabel("Enemy", 5)
-    statusbar2.value += -40
-    otherSprite.destroy()
-})
 scene.onOverlapTile(SpriteKind.Player, sprites.vehicle.roadVertical, function (sprite, location) {
     tiles.setTilemap(tiles.createTilemap(
             hex`1000100008080808080808080808080808080808080808080808080808080808080808080808020303030303030303030303030308080201010101010101010101010106080802010101010101010101010101060808020101010101010101010101010608080201010405050505050505050505080802010104080808080808080808080808020101040808080808080808080808080201010408080808080808080808080802010104080808080808080808080808020101040808080808080808080808080201010408080808080808080808080802010104080808080808080808080808020101040808080808080808080808080207010408080808080808080808`,
@@ -257,10 +264,10 @@ scene.onOverlapTile(SpriteKind.Player, sprites.vehicle.roadVertical, function (s
         ))
     tiles.placeOnRandomTile(sprite, sprites.dungeon.collectibleBlueCrystal)
 })
-statusbars.onZero(StatusBarKind.EnemyHealth, function (status) {
-    game.splash("You win first boss", "Great Job")
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleInsignia, function (sprite, location) {
+    game.splash("First boss", "are you ready")
     tiles.setTilemap(tiles.createTilemap(
-            hex`1000100008090909111111111111090909090905020101010101010101010101010101060201010101010101010101010101010602010101010101010101010101010106020101010101010101010101010101060201010101010101010101010101010602010101010112010101010101010106020101010101010101010101010101060201010101010101010101010101010602010101010101010101010101010106030404040401010101040404040404070e0e0e0e0501010101080e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e02010b0b01060e0e0e0e0e0e`,
+            hex`10001000080909090a0a0a0a0a0a09090909090502010101010101010101010101010106020101010101010101010101010101060201010101010c010101010101010106020101010101010101010101010101060201010101010101010101010101010602010101010101010101010101010106020101010101010101010101010101060201010101010101010101010101010602010101010101010101010101010106030404040401010101040404040404070e0e0e0e0501010101080e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e02010b0b01060e0e0e0e0e0e`,
             img`
 2 2 2 2 . . . . . . 2 2 2 2 2 2 
 2 . . . . . . . . . . . . . . 2 
@@ -282,32 +289,66 @@ statusbars.onZero(StatusBarKind.EnemyHealth, function (status) {
             [myTiles.tile0,sprites.dungeon.darkGroundCenter,sprites.dungeon.greenOuterWest1,sprites.dungeon.greenOuterSouthEast,sprites.dungeon.greenOuterSouth0,sprites.dungeon.greenOuterNorthEast,sprites.dungeon.greenOuterEast0,sprites.dungeon.greenOuterSouthWest,sprites.dungeon.greenOuterNorthWest,sprites.dungeon.greenOuterNorth0,myTiles.tile1,sprites.dungeon.collectibleRedCrystal,sprites.dungeon.chestOpen,sprites.dungeon.floorLight0,sprites.dungeon.hazardLava0,sprites.dungeon.hazardSpike,sprites.dungeon.hazardHole,sprites.dungeon.darkGroundSouthWest1,sprites.dungeon.chestClosed],
             TileScale.Sixteen
         ))
-    status.destroy()
-    Boss01.destroy(effects.fire, 500)
-    FVVGYGYHGHG = true
+    tiles.placeOnRandomTile(sprite, sprites.dungeon.collectibleRedCrystal)
+    Boss01 = sprites.create(img`
+. . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . f f f f . . . . . . . . . . 
+. . . . . . . . f f 1 1 1 1 f f . . . . . . . . 
+. . . . . . . f b 1 1 1 1 1 1 b f . . . . . . . 
+. . . . . . . f 1 1 1 1 1 1 1 1 f . . . . . . . 
+. . . . . . f d 1 1 1 1 1 1 1 1 d f . . . . . . 
+. . . . . . f d 1 1 1 1 1 1 1 1 d f . . . . . . 
+. . . . . . f d d d 1 1 1 1 d d d f . . . . . . 
+. . . . . . f b d b f d d f b d b f . . . . . . 
+. . . . . . f c d c f 1 1 f c d c f . . . . . . 
+. . . . . . . f b 1 1 1 1 1 1 b f . . . . . . . 
+. . . . . . f f f c d b 1 b d f f f f . . . . . 
+. . . . f c 1 1 1 c b f b f c 1 1 1 c f . . . . 
+. . . . f 1 b 1 b 1 f f f f 1 b 1 b 1 f . . . . 
+. . . . f b f b f f f f f f b f b f b f . . . . 
+. . . . . . . . . f f f f f f . . . . . . . . . 
+. . . . . . . . . . . f f f . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . 
+`, SpriteKind.Boss01)
+    tiles.placeOnRandomTile(Boss01, sprites.dungeon.chestOpen)
+    statusbar = statusbars.create(100, 4, StatusBarKind.EnemyHealth)
+    statusbar.setColor(5, 2, 10)
+    statusbar.setLabel("HP Boss", 5)
+    statusbar.setPosition(58, 14)
 })
-statusbars.onZero(StatusBarKind.Magic, function (status) {
+sprites.onOverlap(SpriteKind.INFIN, SpriteKind.Boss01, function (sprite, otherSprite) {
+    statusbar.value += -5
+    sprite.destroy()
+})
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sprite, location) {
+    FUGVBG = true
     tiles.setTilemap(tiles.createTilemap(
-            hex`1000100002020201060606060606010202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020203020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202040404020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202`,
+            hex`1000100008090909131313131313090909090905020101010101010101010101010101060201010101010101010101010101010602010101010101010101010101010106020101010101010101010101010101060201010101010101010101010101010602010101010101010101010101010106020101010101010101010101010101060201010101010101010101010101010602010101010101010101010101010106030404040401010101040404040404070e0e0e0e0501010101080e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e02010b0b01060e0e0e0e0e0e`,
             img`
-. . . 2 . . . . . . 2 . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
+2 2 2 2 . . . . . . 2 2 2 2 2 2 
+2 . . . . . . . . . . . . . . 2 
+2 . . . . . . . . . . . . . . 2 
+2 . . . . . . . . . . . . . . 2 
+2 . . . . . . . . . . . . . . 2 
+2 . . . . . . . . . . . . . . 2 
+2 . . . . . . . . . . . . . . 2 
+2 . . . . . . . . . . . . . . 2 
+2 . . . . . . . . . . . . . . 2 
+2 . . . . . . . . . . . . . . 2 
+2 2 2 2 2 . . . . 2 2 2 2 2 2 2 
+. . . . 2 . . . . 2 . . . . . . 
+. . . . 2 . . . . 2 . . . . . . 
+. . . . 2 . . . . 2 . . . . . . 
+. . . . 2 . . . . 2 . . . . . . 
+. . . . 2 . . . . 2 . . . . . . 
 `,
-            [myTiles.tile0,myTiles.tile1,sprites.dungeon.darkGroundCenter,sprites.dungeon.doorLockedNorth,sprites.dungeon.floorLight3,sprites.dungeon.darkGroundSouth,sprites.dungeon.floorDark5],
+            [myTiles.tile0,sprites.dungeon.darkGroundCenter,sprites.dungeon.greenOuterWest1,sprites.dungeon.greenOuterSouthEast,sprites.dungeon.greenOuterSouth0,sprites.dungeon.greenOuterNorthEast,sprites.dungeon.greenOuterEast0,sprites.dungeon.greenOuterSouthWest,sprites.dungeon.greenOuterNorthWest,sprites.dungeon.greenOuterNorth0,myTiles.tile1,sprites.dungeon.collectibleRedCrystal,sprites.dungeon.chestOpen,sprites.dungeon.floorLight0,sprites.dungeon.hazardLava0,sprites.dungeon.hazardSpike,sprites.dungeon.hazardHole,sprites.dungeon.darkGroundNorthEast1,sprites.dungeon.darkGroundNorthWest1,sprites.dungeon.darkGroundSouthWest1],
             TileScale.Sixteen
         ))
 })
@@ -401,74 +442,33 @@ f f 2 2 2 2 f b b b b f c c . .
     tiles.placeOnRandomTile(ENNNNNMEMYY, sprites.dungeon.doorLockedNorth)
     ENNNNNMEMYY.follow(Player_MANSION, 60)
 })
-sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
-    game.over(false)
-})
-sprites.onOverlap(SpriteKind.INFIN, SpriteKind.Boss01, function (sprite, otherSprite) {
-    statusbar.value += -5
-    sprite.destroy()
-})
-scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleInsignia, function (sprite, location) {
-    game.splash("First boss", "are you ready")
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.buttonOrange, function (sprite, location) {
     tiles.setTilemap(tiles.createTilemap(
-            hex`10001000080909090a0a0a0a0a0a09090909090502010101010101010101010101010106020101010101010101010101010101060201010101010c010101010101010106020101010101010101010101010101060201010101010101010101010101010602010101010101010101010101010106020101010101010101010101010101060201010101010101010101010101010602010101010101010101010101010106030404040401010101040404040404070e0e0e0e0501010101080e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e0201010101060e0e0e0e0e0e0e0e0e0e02010b0b01060e0e0e0e0e0e`,
+            hex`100010000a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a010101010101010e0101010101010101010101010101011001010101010101010707070707020101010a0a0a0a0a0a0a0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b02010101090b0b0b0b0b0b0b0b0b0b0b020c0d0c090b0b0b0b0b0b`,
             img`
-2 2 2 2 . . . . . . 2 2 2 2 2 2 
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
 2 . . . . . . . . . . . . . . 2 
 2 . . . . . . . . . . . . . . 2 
-2 . . . . . . . . . . . . . . 2 
-2 . . . . . . . . . . . . . . 2 
-2 . . . . . . . . . . . . . . 2 
-2 . . . . . . . . . . . . . . 2 
-2 . . . . . . . . . . . . . . 2 
-2 . . . . . . . . . . . . . . 2 
-2 . . . . . . . . . . . . . . 2 
-2 2 2 2 2 . . . . 2 2 2 2 2 2 2 
-. . . . 2 . . . . 2 . . . . . . 
-. . . . 2 . . . . 2 . . . . . . 
-. . . . 2 . . . . 2 . . . . . . 
-. . . . 2 . . . . 2 . . . . . . 
-. . . . 2 . . . . 2 . . . . . . 
+2 2 2 2 2 2 . . . 2 2 2 2 2 2 2 
+. . . . . 2 . . . 2 . . . . . . 
+. . . . . 2 . . . 2 . . . . . . 
+. . . . . 2 . . . 2 . . . . . . 
+. . . . . 2 . . . 2 . . . . . . 
+. . . . . 2 . . . 2 . . . . . . 
+. . . . . 2 . . . 2 . . . . . . 
+. . . . . 2 . . . 2 . . . . . . 
+. . . . . 2 . . . 2 . . . . . . 
+. . . . . 2 . . . 2 . . . . . . 
+. . . . . 2 . . . 2 . . . . . . 
+. . . . . 2 . . . 2 . . . . . . 
+. . . . . 2 . . . 2 . . . . . . 
 `,
-            [myTiles.tile0,sprites.dungeon.darkGroundCenter,sprites.dungeon.greenOuterWest1,sprites.dungeon.greenOuterSouthEast,sprites.dungeon.greenOuterSouth0,sprites.dungeon.greenOuterNorthEast,sprites.dungeon.greenOuterEast0,sprites.dungeon.greenOuterSouthWest,sprites.dungeon.greenOuterNorthWest,sprites.dungeon.greenOuterNorth0,myTiles.tile1,sprites.dungeon.collectibleRedCrystal,sprites.dungeon.chestOpen,sprites.dungeon.floorLight0,sprites.dungeon.hazardLava0,sprites.dungeon.hazardSpike,sprites.dungeon.hazardHole,sprites.dungeon.darkGroundSouthWest1,sprites.dungeon.chestClosed],
+            [myTiles.tile0,sprites.dungeon.darkGroundCenter,sprites.dungeon.purpleOuterWest0,sprites.dungeon.purpleOuterNorthEast,sprites.dungeon.purpleOuterSouthWest,sprites.dungeon.purpleOuterNorthWest,sprites.dungeon.purpleOuterSouthEast,sprites.dungeon.purpleOuterNorth0,sprites.dungeon.purpleOuterWest1,sprites.dungeon.purpleOuterEast0,sprites.dungeon.purpleOuterNorth1,sprites.dungeon.hazardLava0,sprites.dungeon.hazardSpike,sprites.dungeon.hazardHole,sprites.dungeon.buttonOrangeDepressed,sprites.dungeon.buttonOrange,sprites.vehicle.roadVertical,myTiles.tile1],
             TileScale.Sixteen
         ))
-    tiles.placeOnRandomTile(sprite, sprites.dungeon.collectibleRedCrystal)
-    Boss01 = sprites.create(img`
-. . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . f f f f . . . . . . . . . . 
-. . . . . . . . f f 1 1 1 1 f f . . . . . . . . 
-. . . . . . . f b 1 1 1 1 1 1 b f . . . . . . . 
-. . . . . . . f 1 1 1 1 1 1 1 1 f . . . . . . . 
-. . . . . . f d 1 1 1 1 1 1 1 1 d f . . . . . . 
-. . . . . . f d 1 1 1 1 1 1 1 1 d f . . . . . . 
-. . . . . . f d d d 1 1 1 1 d d d f . . . . . . 
-. . . . . . f b d b f d d f b d b f . . . . . . 
-. . . . . . f c d c f 1 1 f c d c f . . . . . . 
-. . . . . . . f b 1 1 1 1 1 1 b f . . . . . . . 
-. . . . . . f f f c d b 1 b d f f f f . . . . . 
-. . . . f c 1 1 1 c b f b f c 1 1 1 c f . . . . 
-. . . . f 1 b 1 b 1 f f f f 1 b 1 b 1 f . . . . 
-. . . . f b f b f f f f f f b f b f b f . . . . 
-. . . . . . . . . f f f f f f . . . . . . . . . 
-. . . . . . . . . . . f f f . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . . . 
-`, SpriteKind.Boss01)
-    tiles.placeOnRandomTile(Boss01, sprites.dungeon.chestOpen)
-    statusbar = statusbars.create(100, 4, StatusBarKind.EnemyHealth)
-    statusbar.setColor(5, 2, 10)
-    statusbar.setLabel("HP Boss", 5)
-    statusbar.setPosition(58, 14)
 })
-sprites.onOverlap(SpriteKind.INFIN, SpriteKind.Boss02, function (sprite, otherSprite) {
-    sprite.destroy()
-    STAUSBAR.value += -3
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite, otherSprite) {
+    game.over(false)
 })
 let fcoud: Sprite = null
 let Vs: Sprite = null
@@ -481,13 +481,13 @@ let sdv: Sprite = null
 let ds: Sprite = null
 let dc: Sprite = null
 let projectile: Sprite = null
-let statusbar: StatusBarSprite = null
 let ENNNNNMEMYY: Sprite = null
-let Boss01: Sprite = null
+let statusbar: StatusBarSprite = null
 let projectile2: Sprite = null
-let STAUSBAR: StatusBarSprite = null
 let bossable02: Sprite = null
 let statusbar2: StatusBarSprite = null
+let Boss01: Sprite = null
+let STAUSBAR: StatusBarSprite = null
 let GGSH = false
 let FUGVBG = false
 let FVVGYGYHGHG = false
